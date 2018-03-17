@@ -32,6 +32,83 @@ Status InitList_Sq(struct SqList L)
     return OK;
 }//InitList_Sq
 
+Status DestroyList_Sq(struct SqList L)
+{
+    //销毁线性表L
+    if(!L.listsize) return ERROR; //已是空表
+    free(L.elem);
+    L.length = 0;
+    L.listsize = 0;
+    return OK;
+}//DestroyList_Sq
+
+void ClearList_Sq(struct SqList L)
+{
+    //将L重置为空表
+    L.length = 0;
+}//ClearList_Sq
+
+Status ListEmpty_Sq(struct SqList L)
+{
+    //判断L是否为空表
+    if(L.length == 0)
+        return TRUE;
+    else return FALSE;
+}//ListEmpty_Sq
+
+int ListLength_Sq(struct SqList L)
+{
+    //返回L中数据元素的个数
+    return L.length;
+}//ListLength_Sq
+
+Status GetElem_Sq(struct SqList L, int i, ElemType *e)
+{
+    //用e返回L中第i个数据元素的值
+    //i的合法值为1<=i<=ListLength_Sq(L)
+    if((i < 1) || (i > L.length)) return ERROR; //i值不合法
+    *e = L.elem[i - 1];
+    return OK;
+}//GetElem_Sq
+
+int compare(ElemType a, ElemType b)
+{
+    //元素的比较函数
+    return a-b;
+}
+
+int LocateElem_Sq(struct SqList L, ElemType e, int (*compare)(ElemType, ElemType))
+{
+    //在顺序线性表L中查找第1个值与e满足compare()的元素的位序
+    //若找到，则返回其在L中的位序，否则返回0
+    ElemType *p;
+    int i = 1;    //i的初值为第1个元素的位序
+    p = L.elem;   //p的初值为第1个元素的储存位置
+    while(i <= L.length && !(*compare)(*p++, e)) ++i;
+    if(i <= L.length) return i;
+    else return 0;
+}//LocateElem.Sq
+
+Status PriorElem_Sq(struct SqList L, ElemType cur_e, ElemType *pre_e)
+{
+    //返回cur_e的前驱节点pre_e
+    int Location;
+    Location = LocateElem_Sq(L, cur_e, compare);
+    if(Location < 2) return ERROR;
+    else *pre_e = L.elem[Location - 1];
+    return OK;
+}//PriorElem_Sq
+
+Status NextElem_Sq(struct SqList L, ElemType cur_e, ElemType *next_e)
+{
+    //返回cur_e的后继节点next_e
+    int Location;
+    Location = LocateElem_Sq(L, cur_e, compare);
+    if(Location == 0 || Location == L.length) return ERROR;
+    else *next_e = L.elem[Location + 1];
+    return OK;
+}//NextElem_Sq
+
 Status ListInsert_Sq(struct SqList L, int i, ElemType e)
 {
     //在顺序线性表L中第i个位置之前插入新的元素e
@@ -67,24 +144,6 @@ Status ListDelete_Sq(struct SqList L, int i, ElemType *e)
     return OK;
 }//ListDelete_Sq
 
-int compare(ElemType a, ElemType b)
-{
-    //元素的比较函数
-    return a-b;
-}
-
-int LocateElem_Sq(struct SqList L, ElemType e, int (*compare)(ElemType, ElemType))
-{
-    //在顺序线性表L中查找第1个值与e满足compare()的元素的位序
-    //若找到，则返回其在L中的位序，否则返回0
-    ElemType *p;
-    int i = 1;    //i的初值为第1个元素的位序
-    p = L.elem;   //p的初值为第1个元素的储存位置
-    while(i <= L.length && !(*compare)(*p++, e)) ++i;
-    if(i <= L.length) return i;
-    else return 0;
-}//LocateElem.Sq
-
 void MergeList_Sq(struct SqList La, struct SqList Lb, struct SqList Lc, int (*compare)(ElemType, ElemType))
 {
     //已知顺序线性表La和Lb的元素按值非递减排列
@@ -107,8 +166,18 @@ void MergeList_Sq(struct SqList La, struct SqList Lb, struct SqList Lc, int (*co
     while(pb <= pb_last) *pc++ = *pb++; //插入Lb剩余元素
 }//MergeList_Sq
 
+Status ListTraverse_Sq(struct SqList L, Status (*visit)(ElemType*))
+{
+    int i = 1;
+    if (ListEmpty_Sq(L) == TRUE)
+        return ERROR;
+    while(i <= L.length && visit(L.elem + i) == OK)
+        i++;
+    if(i > L.length) return OK;
+    else return ERROR;
+}
+
 int main()
 {
     return 0;
 }
-//int ListLength_Sq(SqList &L)
