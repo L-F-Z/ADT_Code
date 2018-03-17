@@ -60,12 +60,52 @@ Status ListDelete_Sq(struct SqList L, int i, ElemType *e)
     ElemType *p, *q;
     if((i < 1) || (i > L.length)) return ERROR; //i值不合法
     p = &(L.elem[i - 1]);                       //p为被删除元素的位置
-    e = *p;                                     //被删除元素的值赋给e
+    *e = *p;                                    //被删除元素的值赋给e
     q = L.elem + L.length - 1;                  //表尾元素的位置
-    for(++p; p <= q; ++p) *(p-1) = *p           //被删除元素之后的元素左移
-    --L.length                                  //表长减1
+    for(++p; p <= q; ++p) *(p-1) = *p;          //被删除元素之后的元素左移
+    L.length--;                                 //表长减1
     return OK;
 }//ListDelete_Sq
+
+int compare(ElemType a, ElemType b)
+{
+    //元素的比较函数
+    return a-b;
+}
+
+int LocateElem_Sq(struct SqList L, ElemType e, int (*compare)(ElemType, ElemType))
+{
+    //在顺序线性表L中查找第1个值与e满足compare()的元素的位序
+    //若找到，则返回其在L中的位序，否则返回0
+    ElemType *p;
+    int i = 1;    //i的初值为第1个元素的位序
+    p = L.elem;   //p的初值为第1个元素的储存位置
+    while(i <= L.length && !(*compare)(*p++, e)) ++i;
+    if(i <= L.length) return i;
+    else return 0;
+}//LocateElem.Sq
+
+void MergeList_Sq(struct SqList La, struct SqList Lb, struct SqList Lc, int (*compare)(ElemType, ElemType))
+{
+    //已知顺序线性表La和Lb的元素按值非递减排列
+    //归并La和Lb得到新的顺序线性表Lc，Lc的元素也按值非递减排列
+    ElemType *pa, *pb, *pc, *pa_last, *pb_last;
+    Lc.listsize = La.length + Lb.length;
+    Lc.length = La.length + Lb.length;
+    Lc.elem = (ElemType*)malloc(Lc.listsize * sizeof(ElemType));
+    if(!Lc.elem) exit(OVERFLOW);
+    pa = La.elem; pb = Lb.elem; pc = Lc.elem;
+    pa_last = La.elem + La.length - 1;
+    pb_last = Lb.elem + Lb.length - 1;
+    while(pa <= pa_last && pb <= pb_last)//归并
+    {
+        if((*compare)(*pa, *pb) < 0)
+            *pc++ = *pa++;
+        else *pc++ = *pb++;
+    }
+    while(pa <= pa_last) *pc++ = *pa++; //插入La剩余元素
+    while(pb <= pb_last) *pc++ = *pb++; //插入Lb剩余元素
+}//MergeList_Sq
 
 int main()
 {
