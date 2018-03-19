@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-#define CIRCLED_LIST_C
+#define CIRCULAR_LINKED_LIST_C
 
 //----------|Status|-----------
 typedef int    Status;
