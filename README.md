@@ -43,8 +43,8 @@
 |---|-----|--------|--------|--------|--------|--------|------|-------|
 |三元组|Triplet.c|李奉治|李奉治|李奉治|无|无|已完成|李奉治|
 |顺序表|Sequent_List.c|李奉治|李奉治|李奉治|||阶段1完成|
-|单链表|Linked_List.c|王华强 李奉治|王华强 李奉治|
-|静态链表|Static_Linked_List.c|李奉治|
+|单链表|Linked_List.c|王华强|王华强 李奉治|
+|静态链表|Static_Linked_List.c|李奉治|穆热迪力 曾鸿斌|冯毅飞|
 |循环链表|Circular_Linked_List|王华强|
 |双向链表|Double_Linked_List|韩雨|
 
