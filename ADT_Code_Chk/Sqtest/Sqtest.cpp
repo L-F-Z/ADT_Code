@@ -12,15 +12,21 @@ ofstream outfile7;
 ofstream outfile8;
 
 /*
-    ²âÊÔËµÃ÷£º
-        ²âÊÔº¯Êı²»°üÀ¨DestoryList_Sq/MergeList_Sq
-        ListTraverse_SqÔİÖ»²âÊÔ*2ºÍ/2¹¦ÄÜ(Ïê¼ûmul2)
+    æµ‹è¯•è¯´æ˜ï¼š
+        æµ‹è¯•å‡½æ•°ä¸åŒ…æ‹¬DestoryList_Sq/MergeList_Sq
+        ListTraverse_Sqæš‚åªæµ‹è¯•*2å’Œ/2åŠŸèƒ½(è¯¦è§mul2)
 
-    ÃüÁî¸ñÊ½£º
-    º¯Êı ²ÎÊı1 ²ÎÊı2 ...
+    å‘½ä»¤æ ¼å¼ï¼š
+    å‡½æ•° å‚æ•°1 å‚æ•°2 ...
+    
+    è¾“å‡ºæ–‡ä»¶
+    State:è¡¨ç¤ºå‡½æ•°è¿”å›çš„Statusï¼Œä¸è¿”å›æ—¶é»˜è®¤ä¸ºOK
+    Ans:è¡¨ç¤ºå‡½æ•°è¿”å›çš„ç­”æ¡ˆï¼Œä¸è¿”å›æ—¶é»˜è®¤ä¸º0
+    version0ï¼Œversion1:äº¤æ›¿è¾“å‡ºæ•´ä¸ªé˜Ÿåˆ—
+    (å¸¦stdçš„è¡¨ç¤ºåˆ©ç”¨C++æ ‡å‡†åº“é‡å†™çš„é¡ºåºè¡¨)
 
 
-    º¯Êı¶ÔÓ¦£º
+    å‡½æ•°å¯¹åº”ï¼š
     "Init"   InitList_Sq
     "Clear"  ClearList_Sq
     "Empty"  ListEmpty_Sq
@@ -34,6 +40,7 @@ ofstream outfile8;
     "Travel" ListTraverse_Sq
 
 */
+//æ•°å­—ä¸å‘½ä»¤å¯¹ç…§è¡¨
 //----------|Test|-------------
 #define Init        0
 #define Clear       1
@@ -59,63 +66,64 @@ typedef int    Status;
 //-----------------------------
 
 //---------|Typedef|-----------
-#define LIST_INIT_SIZE 100    //Ë³Ğò±í´æ´¢¿Õ¼äµÄ³õÊ¼·ÖÅäÁ¿
-#define LISTINCREMENT   10    //Ë³Ğò±í´æ´¢¿Õ¼äµÄ·ÖÅäÔöÁ¿
-typedef int ElemType;         //Ë³Ğò±í´æ´¢µÄÊı¾İÀàĞÍ
+#define LIST_INIT_SIZE 100    //é¡ºåºè¡¨å­˜å‚¨ç©ºé—´çš„åˆå§‹åˆ†é…é‡
+#define LISTINCREMENT   10    //é¡ºåºè¡¨å­˜å‚¨ç©ºé—´çš„åˆ†é…å¢é‡
+typedef int ElemType;         //é¡ºåºè¡¨å­˜å‚¨çš„æ•°æ®ç±»å‹
 struct SqList{
-    ElemType  *elem;          //´¢´æ¿Õ¼ä»ùÖ·
-    int       length;         //µ±Ç°³¤¶È
-    int       listsize;       //µ±Ç°·ÖÅäµÄ´¢´æÈİÁ¿(ÒÔsizeof(ElemType)Îªµ¥Î»)
+    ElemType  *elem;          //å‚¨å­˜ç©ºé—´åŸºå€
+    int       length;         //å½“å‰é•¿åº¦
+    int       listsize;       //å½“å‰åˆ†é…çš„å‚¨å­˜å®¹é‡(ä»¥sizeof(ElemType)ä¸ºå•ä½)
 };
 //-----------------------------
 
 //---------|FuncList|----------
 Status InitList_Sq(struct SqList*);
-    //¹¹ÔìÒ»¸ö¿ÕµÄË³Ğò±íL
+    //æ„é€ ä¸€ä¸ªç©ºçš„é¡ºåºè¡¨L
 Status DestroyList_Sq(struct SqList*);
-    //Ïú»ÙË³Ğò±íL
+    //é”€æ¯é¡ºåºè¡¨L
 void ClearList_Sq(struct SqList*);
-    //½«LÖØÖÃÎª¿Õ±í
+    //å°†Lé‡ç½®ä¸ºç©ºè¡¨
 Status ListEmpty_Sq(struct SqList*);
-    //ÅĞ¶ÏLÊÇ·ñÎª¿Õ±í
+    //åˆ¤æ–­Læ˜¯å¦ä¸ºç©ºè¡¨
 int ListLength_Sq(struct SqList*);
-    //·µ»ØLÖĞÊı¾İÔªËØµÄ¸öÊı
+    //è¿”å›Lä¸­æ•°æ®å…ƒç´ çš„ä¸ªæ•°
 Status GetElem_Sq(struct SqList*, int, ElemType*);
-    //ÓÃe·µ»ØLÖĞµÚi¸öÊı¾İÔªËØµÄÖµ
+    //ç”¨eè¿”å›Lä¸­ç¬¬iä¸ªæ•°æ®å…ƒç´ çš„å€¼
 int compare(ElemType, ElemType);
-    //ÔªËØµÄ±È½Ïº¯Êı
+    //å…ƒç´ çš„æ¯”è¾ƒå‡½æ•°
 int LocateElem_Sq(struct SqList*, ElemType, int (*compare)(ElemType, ElemType));
-    //ÔÚË³ĞòË³Ğò±íLÖĞ²éÕÒµÚ1¸öÖµÓëeÂú×ãcompare()µÄÔªËØµÄÎ»Ğò
+    //åœ¨é¡ºåºé¡ºåºè¡¨Lä¸­æŸ¥æ‰¾ç¬¬1ä¸ªå€¼ä¸eæ»¡è¶³compare()çš„å…ƒç´ çš„ä½åº
 Status PriorElem_Sq(struct SqList*, ElemType, ElemType*);
-    //·µ»Øcur_eµÄÇ°Çı½Úµãpre_e
+    //è¿”å›cur_eçš„å‰é©±èŠ‚ç‚¹pre_e
 Status NextElem_Sq(struct SqList*, ElemType, ElemType*);
-    //·µ»Øcur_eµÄºó¼Ì½Úµãnext_e
+    //è¿”å›cur_eçš„åç»§èŠ‚ç‚¹next_e
 Status ListInsert_Sq(struct SqList*, int, ElemType);
-    //ÔÚË³Ğò±íLÖĞµÚi¸öÎ»ÖÃÖ®Ç°²åÈëĞÂµÄÔªËØe
+    //åœ¨é¡ºåºè¡¨Lä¸­ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥æ–°çš„å…ƒç´ e
 Status ListDelete_Sq(struct SqList*, int, ElemType*);
-    //ÔÚË³Ğò±íLÖĞÉ¾³ıµÚi¸öÔªËØ£¬²¢ÓÃe·µ»ØÆäÖµ
+    //åœ¨é¡ºåºè¡¨Lä¸­åˆ é™¤ç¬¬iä¸ªå…ƒç´ ï¼Œå¹¶ç”¨eè¿”å›å…¶å€¼
 void MergeList_Sq(struct SqList*, struct SqList*, struct SqList*, int (*compare)(ElemType, ElemType));
-    //ÒÑÖªË³Ğò±íLaºÍLbµÄÔªËØ°´Öµ·Çµİ¼õÅÅÁĞ
+    //å·²çŸ¥é¡ºåºè¡¨Laå’ŒLbçš„å…ƒç´ æŒ‰å€¼éé€’å‡æ’åˆ—
 Status ListTraverse_Sq(struct SqList*, Status (*visit)(ElemType*));
-    //ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvisit()£¬Ò»µ©visit()Ê§°Ü£¬Ôò²Ù×÷Ê§°Ü
+    //ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°visit()ï¼Œä¸€æ—¦visit()å¤±è´¥ï¼Œåˆ™æ“ä½œå¤±è´¥
 Status PrintList_Sq(struct SqList*);
-    //´òÓ¡Ë³Ğò±íL
+    //æ‰“å°é¡ºåºè¡¨L
 //-----------------------------
 
 SqList List;
 list<ElemType> stdList;
 int version = 0;
-//µ±Ç°°æ±¾
-//²Ù×÷Ç°ºóµÄ¶ÓÁĞÊı¾İ»á·Ö±ğ´æÔÚstd0,std1ºÍmy0,my1ÖĞ,versionÎªµ±´Î²Ù×÷ºó½«ÊäÈëµÄÎÄ¼şĞòºÅ
+//å½“å‰ç‰ˆæœ¬
+//æ“ä½œå‰åçš„é˜Ÿåˆ—æ•°æ®ä¼šåˆ†åˆ«å­˜åœ¨std0,std1å’Œmy0,my1ä¸­,versionä¸ºå½“æ¬¡æ“ä½œåå°†è¾“å…¥çš„æ–‡ä»¶åºå·
 
 int ComCount = 0;
-//ÒÑÖ´ĞĞÃüÁîÊı
+//å·²æ‰§è¡Œå‘½ä»¤æ•°
 
 int StateNow;
 int StateStdNow;
 int AnsNow;
 int AnsStdNow;
 
+//è¾“å‡ºåˆ°Stateæ–‡ä»¶ä¸­
 void printState(Status state)
 {
     StateNow = state;
@@ -124,6 +132,7 @@ void printState(Status state)
 
 }
 
+//è¾“å‡ºåˆ°stdStateæ–‡ä»¶ä¸­
 void printstdState(Status state)
 {
     StateStdNow = state;
@@ -131,6 +140,7 @@ void printstdState(Status state)
     outfile2 << state << endl;
 }
 
+//è¾“å‡ºåˆ°ansæ–‡ä»¶ä¸­
 void printAns(int x)
 {
     AnsNow = x;
@@ -139,6 +149,7 @@ void printAns(int x)
 
 }
 
+//è¾“å‡ºåˆ°stdansæ–‡ä»¶ä¸­
 void printstdAns(int x)
 {
     AnsStdNow = x;
@@ -147,6 +158,7 @@ void printstdAns(int x)
 }
 
 
+//éå†è¡¨æ“ä½œæ—¶æ‰€ç”¨å‡½æ•°
 Status mul2(ElemType *a)
 {
     if (a == NULL) return ERROR;
@@ -155,37 +167,38 @@ Status mul2(ElemType *a)
     return OK;
 }
 
-
+//æ‰§è¡Œå‘½ä»¤
+//åˆ†åˆ«æ‰§è¡Œé¡ºåºè¡¨å‡½æ•°å’Œåˆ©ç”¨C++æ ‡å‡†åº“ä¸­çš„é“¾è¡¨listæ¨¡æ‹Ÿé¡ºåºè¡¨å‡½æ•°(ä»¥åæµ‹è¯•å¯ä»¥ä½¿ç”¨å¤šä¸ªçº¿æ€§è¡¨äº’ç›¸å¯¹ç…§ï¼Œç”±äºæ ¼å¼ç»Ÿä¸€ï¼Œæ–¹ä¾¿å¾ˆå¤š)
 bool execute(int x)
 {
     int y, wz; ElemType ans = 0,number;
     bool flag;
     switch(x){
-        case 0:
+        case Init:
             printState(InitList_Sq(&List));
             printstdState(OK);
             printAns(0);
             printstdAns(0);
             break;
-        case 1:
+        case Clear:
             printState(OK);
             printstdState(OK);
             printAns(0);
             printstdAns(0);
             break;
-        case 2:
+        case Empty:
             printState(OK);
             printstdState(OK);
             printAns(ListEmpty_Sq(&List));
             printstdAns(stdList.empty());
             break;
-        case 3:
+        case Length:
             printState(OK);
             printstdState(OK);
             printAns(ListLength_Sq(&List));
             printstdAns(stdList.size());
             break;
-        case 4:
+        case Get:
             scanf("%d",&y);
             ans = 0;
             printState(GetElem_Sq(&List, y, &ans));
@@ -206,7 +219,7 @@ bool execute(int x)
 
             }else printstdAns(0);
             break;
-        case 5:
+        case Locate:
             scanf("%d",&y);
             printState(OK);
             printstdState(OK);
@@ -226,7 +239,7 @@ bool execute(int x)
             if (!flag) printstdAns(0);
                 else printstdAns(wz);
             break;
-        case 6:
+        case Prior:
             scanf("%d",&y);
             ans = 0;
             printState(PriorElem_Sq(&List, y ,&ans));
@@ -263,7 +276,7 @@ bool execute(int x)
                 }
             }
             break;
-        case 7:
+        case Next:
             ans = 0;
             scanf("%d",&y);
             printState(NextElem_Sq(&List, y ,&ans));
@@ -301,7 +314,7 @@ bool execute(int x)
                 }
             }
             break;
-        case 8:
+        case Insert:
             scanf("%d%d",&y,&number);
             printState(ListInsert_Sq(&List, y, number));
             printAns(0);
@@ -324,7 +337,7 @@ bool execute(int x)
             }else printstdState(ERROR);
             printstdAns(0);
             break;
-        case 9:
+        case Delete:
             ans = 0;
             scanf("%d",&y);
             printState(ListDelete_Sq(&List, y, &ans));
@@ -344,7 +357,7 @@ bool execute(int x)
                 printstdState(OK);
             }else printstdState(ERROR), printstdAns(0);
             break;
-        case 10:
+        case Travel:
             printState(ListTraverse_Sq(&List, mul2));
             printAns(0);
             for (list<int>::iterator iter = stdList.begin();iter != stdList.end();iter++)
@@ -358,11 +371,13 @@ bool execute(int x)
     }
     if (version == 0)
     {
+        //è¾“å‡ºåˆ°version0
         outfile5 << List.length << endl;
         for(int i = 0;i < List.length;++i)
             outfile5 << List.elem[i] << " ";
         outfile5 << endl;
     }else{
+        //è¾“å‡ºåˆ°version1
         outfile7 << List.length << endl;
         for(int i = 0;i < List.length;++i)
             outfile7 << List.elem[i] << " ";
@@ -372,11 +387,13 @@ bool execute(int x)
 
     if (version == 0)
     {
+        //è¾“å‡ºåˆ°versionstd0
         outfile6 << stdList.size() << endl;
         for (list<int>::const_iterator iter = stdList.begin();iter != stdList.end();iter++)
             outfile6 << *iter << " ";
         outfile6 << endl;
     }else{
+        //è¾“å‡ºåˆ°versionstd1 
         outfile8 << stdList.size() << endl;
         for (list<int>::const_iterator iter = stdList.begin();iter != stdList.end();iter++)
             outfile8 << *iter << " ";
@@ -388,10 +405,12 @@ bool execute(int x)
     list<int>::const_iterator iter = stdList.begin();
     for(int i = 0;i < List.length;++iter,++i)
     {
+        //å¯¹æ¯”å½“å‰é˜Ÿåˆ—ï¼Œä¸ä¸€æ ·åˆ™è¿”å›false
         if (*iter != List.elem[i])
             return false;
     }
 
+    //å¯¹æ¯”å½“å‰Stateå’Œansï¼Œä¸ä¸€æ ·åˆ™è¿”å›false
     if (StateNow != StateStdNow)
         return false;
     if (AnsNow != AnsStdNow)
@@ -403,6 +422,7 @@ bool execute(int x)
 int main()
 {
     int n;
+    //æ–‡ä»¶æµ
     freopen("Sqtest.in","r",stdin);
     outfile1.open("State.txt");
     outfile2.open("stdState.txt");
@@ -419,6 +439,7 @@ int main()
         scanf("%d",&x);
         if (!execute(x))
         {
+            //å¦‚æœæ‰§è¡Œè¿”å›false,å³å‡ºç°ä¸ä¸€è‡´ï¼Œåˆ™è¾“å‡ºå‡ºç°é”™è¯¯çš„å‘½ä»¤æ•°ï¼Œä»¥åŠæœ€æ–°çš„é˜Ÿåˆ—åœ¨version0è¿˜æ˜¯version1ä¸­ï¼Œå¹¶é€€å‡ºç¨‹åº
             outfile0.open("Log.txt");
             outfile0 << "ERROR IN COM " << ComCount + 1 << "\nNow The Version Is " << version << endl;
             outfile0.close();
@@ -432,7 +453,9 @@ int main()
             outfile8.close();
             return 0;
         }
+        //0->1 1->0
         version^=1;
+        //å·²æ‰§è¡Œå‘½ä»¤æ•°+1
         ++ComCount;
     }
     outfile1.close();
@@ -450,7 +473,7 @@ int main()
 //-----------------------------
 Status InitList_Sq(struct SqList *L)
 {
-    //¹¹ÔìÒ»¸ö¿ÕµÄË³Ğò±íL
+    //æ„é€ ä¸€ä¸ªç©ºçš„é¡ºåºè¡¨L
     L->elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(ElemType));
     if(!L->elem) exit(OVERFLOW);
     L->length = 0;
@@ -461,8 +484,8 @@ Status InitList_Sq(struct SqList *L)
 
 Status DestroyList_Sq(struct SqList *L)
 {
-    //Ïú»ÙË³Ğò±íL
-    if(!L->listsize) return ERROR; //ÒÑÊÇ¿Õ±í
+    //é”€æ¯é¡ºåºè¡¨L
+    if(!L->listsize) return ERROR; //å·²æ˜¯ç©ºè¡¨
     free(L->elem);
     L->length = 0;
     L->listsize = 0;
@@ -471,13 +494,13 @@ Status DestroyList_Sq(struct SqList *L)
 
 void ClearList_Sq(struct SqList *L)
 {
-    //½«LÖØÖÃÎª¿Õ±í
+    //å°†Lé‡ç½®ä¸ºç©ºè¡¨
     L->length = 0;
 }//ClearList_Sq
 
 Status ListEmpty_Sq(struct SqList *L)
 {
-    //ÅĞ¶ÏLÊÇ·ñÎª¿Õ±í
+    //åˆ¤æ–­Læ˜¯å¦ä¸ºç©ºè¡¨
     if(L->length == 0)
         return TRUE;
     else return FALSE;
@@ -485,32 +508,32 @@ Status ListEmpty_Sq(struct SqList *L)
 
 int ListLength_Sq(struct SqList *L)
 {
-    //·µ»ØLÖĞÊı¾İÔªËØµÄ¸öÊı
+    //è¿”å›Lä¸­æ•°æ®å…ƒç´ çš„ä¸ªæ•°
     return L->length;
 }//ListLength_Sq
 
 Status GetElem_Sq(struct SqList *L, int i, ElemType *e)
 {
-    //ÓÃe·µ»ØLÖĞµÚi¸öÊı¾İÔªËØµÄÖµ
-    //iµÄºÏ·¨ÖµÎª1<=i<=ListLength_Sq(L)
-    if((i < 1) || (i > L->length)) return ERROR; //iÖµ²»ºÏ·¨
+    //ç”¨eè¿”å›Lä¸­ç¬¬iä¸ªæ•°æ®å…ƒç´ çš„å€¼
+    //içš„åˆæ³•å€¼ä¸º1<=i<=ListLength_Sq(L)
+    if((i < 1) || (i > L->length)) return ERROR; //iå€¼ä¸åˆæ³•
     *e = L->elem[i - 1];
     return OK;
 }//GetElem_Sq
 
 int compare(ElemType a, ElemType b)
 {
-    //ÔªËØµÄ±È½Ïº¯Êı
+    //å…ƒç´ çš„æ¯”è¾ƒå‡½æ•°
     return a-b;
 }
 
 int LocateElem_Sq(struct SqList *L, ElemType e, int (*compare)(ElemType, ElemType))
 {
-    //ÔÚË³ĞòË³Ğò±íLÖĞ²éÕÒµÚ1¸öÖµÓëeÂú×ãcompare()µÄÔªËØµÄÎ»Ğò
-    //ÈôÕÒµ½£¬Ôò·µ»ØÆäÔÚLÖĞµÄÎ»Ğò£¬·ñÔò·µ»Ø0
+    //åœ¨é¡ºåºé¡ºåºè¡¨Lä¸­æŸ¥æ‰¾ç¬¬1ä¸ªå€¼ä¸eæ»¡è¶³compare()çš„å…ƒç´ çš„ä½åº
+    //è‹¥æ‰¾åˆ°ï¼Œåˆ™è¿”å›å…¶åœ¨Lä¸­çš„ä½åºï¼Œå¦åˆ™è¿”å›0
     ElemType *p;
-    int i = 1;    //iµÄ³õÖµÎªµÚ1¸öÔªËØµÄÎ»Ğò
-    p = L->elem;   //pµÄ³õÖµÎªµÚ1¸öÔªËØµÄ´¢´æÎ»ÖÃ
+    int i = 1;    //içš„åˆå€¼ä¸ºç¬¬1ä¸ªå…ƒç´ çš„ä½åº
+    p = L->elem;   //pçš„åˆå€¼ä¸ºç¬¬1ä¸ªå…ƒç´ çš„å‚¨å­˜ä½ç½®
     while(i <= L->length && (*compare)(*p++, e)) ++i;
     if(i <= L->length) return i;
     else return 0;
@@ -518,7 +541,7 @@ int LocateElem_Sq(struct SqList *L, ElemType e, int (*compare)(ElemType, ElemTyp
 
 Status PriorElem_Sq(struct SqList *L, ElemType cur_e, ElemType *pre_e)
 {
-    //·µ»Øcur_eµÄÇ°Çı½Úµãpre_e
+    //è¿”å›cur_eçš„å‰é©±èŠ‚ç‚¹pre_e
     int Location;
     Location = LocateElem_Sq(L, cur_e, compare);
     if(Location < 2) return ERROR;
@@ -528,7 +551,7 @@ Status PriorElem_Sq(struct SqList *L, ElemType cur_e, ElemType *pre_e)
 
 Status NextElem_Sq(struct SqList *L, ElemType cur_e, ElemType *next_e)
 {
-    //·µ»Øcur_eµÄºó¼Ì½Úµãnext_e
+    //è¿”å›cur_eçš„åç»§èŠ‚ç‚¹next_e
     int Location;
     Location = LocateElem_Sq(L, cur_e, compare);
     if(Location == 0 || Location == L->length) return ERROR;
@@ -538,43 +561,43 @@ Status NextElem_Sq(struct SqList *L, ElemType cur_e, ElemType *next_e)
 
 Status ListInsert_Sq(struct SqList *L, int i, ElemType e)
 {
-    //ÔÚË³Ğò±íLÖĞµÚi¸öÎ»ÖÃÖ®Ç°²åÈëĞÂµÄÔªËØe
-    //iµÄºÏ·¨ÖµÎª1<=i<=ListLength_Sq(L)+1
+    //åœ¨é¡ºåºè¡¨Lä¸­ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥æ–°çš„å…ƒç´ e
+    //içš„åˆæ³•å€¼ä¸º1<=i<=ListLength_Sq(L)+1
     ElemType *newbase, *q, *p;
-    if(i < 1 || i > L->length+1) return ERROR; //iÖµ²»ºÏ·¨
+    if(i < 1 || i > L->length+1) return ERROR; //iå€¼ä¸åˆæ³•
     if(L->length >= L->listsize)
     {
         newbase = (ElemType *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(ElemType));
-        if(!newbase) exit(OVERFLOW);           //´¢´æ·ÖÅäÊ§°Ü
-        L->elem = newbase;                     //ĞÂ»ùÖ·
-        L->listsize += LISTINCREMENT;          //Ôö¼Ó´¢´æÈİÁ¿
+        if(!newbase) exit(OVERFLOW);           //å‚¨å­˜åˆ†é…å¤±è´¥
+        L->elem = newbase;                     //æ–°åŸºå€
+        L->listsize += LISTINCREMENT;          //å¢åŠ å‚¨å­˜å®¹é‡
     }
-    q = &(L->elem[i-1]);                       //qÎª²åÈëµØÖ·
+    q = &(L->elem[i-1]);                       //qä¸ºæ’å…¥åœ°å€
     for(p = &(L->elem[L->length-1]); p >= q; --p)
-        *(p + 1) = *p;                         //²åÈëÎ»ÖÃ¼°Ö®ºóµÄÔªËØÓÒÒÆ
-    *q = e;                                    //²åÈëe
-    L->length++;                               //±í³¤Ôö1
+        *(p + 1) = *p;                         //æ’å…¥ä½ç½®åŠä¹‹åçš„å…ƒç´ å³ç§»
+    *q = e;                                    //æ’å…¥e
+    L->length++;                               //è¡¨é•¿å¢1
     return OK;
 }//ListInsert_Sq
 
 Status ListDelete_Sq(struct SqList *L, int i, ElemType *e)
 {
-    //ÔÚË³Ğò±íLÖĞÉ¾³ıµÚi¸öÔªËØ£¬²¢ÓÃe·µ»ØÆäÖµ
-    //iµÄºÏ·¨ÖµÎª1<=i<=ListLength_Sq(L)
+    //åœ¨é¡ºåºè¡¨Lä¸­åˆ é™¤ç¬¬iä¸ªå…ƒç´ ï¼Œå¹¶ç”¨eè¿”å›å…¶å€¼
+    //içš„åˆæ³•å€¼ä¸º1<=i<=ListLength_Sq(L)
     ElemType *p, *q;
-    if((i < 1) || (i > L->length)) return ERROR; //iÖµ²»ºÏ·¨
-    p = &(L->elem[i - 1]);                       //pÎª±»É¾³ıÔªËØµÄÎ»ÖÃ
-    *e = *p;                                    //±»É¾³ıÔªËØµÄÖµ¸³¸øe
-    q = L->elem + L->length - 1;                  //±íÎ²ÔªËØµÄÎ»ÖÃ
-    for(++p; p <= q; ++p) *(p-1) = *p;          //±»É¾³ıÔªËØÖ®ºóµÄÔªËØ×óÒÆ
-    L->length--;                                 //±í³¤¼õ1
+    if((i < 1) || (i > L->length)) return ERROR; //iå€¼ä¸åˆæ³•
+    p = &(L->elem[i - 1]);                       //pä¸ºè¢«åˆ é™¤å…ƒç´ çš„ä½ç½®
+    *e = *p;                                    //è¢«åˆ é™¤å…ƒç´ çš„å€¼èµ‹ç»™e
+    q = L->elem + L->length - 1;                  //è¡¨å°¾å…ƒç´ çš„ä½ç½®
+    for(++p; p <= q; ++p) *(p-1) = *p;          //è¢«åˆ é™¤å…ƒç´ ä¹‹åçš„å…ƒç´ å·¦ç§»
+    L->length--;                                 //è¡¨é•¿å‡1
     return OK;
 }//ListDelete_Sq
 
 void MergeList_Sq(struct SqList *La, struct SqList *Lb, struct SqList *Lc, int (*compare)(ElemType, ElemType))
 {
-    //ÒÑÖªË³Ğò±íLaºÍLbµÄÔªËØ°´Öµ·Çµİ¼õÅÅÁĞ
-    //¹é²¢LaºÍLbµÃµ½ĞÂµÄË³Ğò±íLc£¬LcµÄÔªËØÒ²°´Öµ·Çµİ¼õÅÅÁĞ
+    //å·²çŸ¥é¡ºåºè¡¨Laå’ŒLbçš„å…ƒç´ æŒ‰å€¼éé€’å‡æ’åˆ—
+    //å½’å¹¶Laå’ŒLbå¾—åˆ°æ–°çš„é¡ºåºè¡¨Lcï¼ŒLcçš„å…ƒç´ ä¹ŸæŒ‰å€¼éé€’å‡æ’åˆ—
     ElemType *pa, *pb, *pc, *pa_last, *pb_last;
     Lc->listsize = La->length + Lb->length;
     Lc->length = La->length + Lb->length;
@@ -583,19 +606,19 @@ void MergeList_Sq(struct SqList *La, struct SqList *Lb, struct SqList *Lc, int (
     pa = La->elem; pb = Lb->elem; pc = Lc->elem;
     pa_last = La->elem + La->length - 1;
     pb_last = Lb->elem + Lb->length - 1;
-    while(pa <= pa_last && pb <= pb_last)//¹é²¢
+    while(pa <= pa_last && pb <= pb_last)//å½’å¹¶
     {
         if((*compare)(*pa, *pb) < 0)
             *pc++ = *pa++;
         else *pc++ = *pb++;
     }
-    while(pa <= pa_last) *pc++ = *pa++; //²åÈëLaÊ£ÓàÔªËØ
-    while(pb <= pb_last) *pc++ = *pb++; //²åÈëLbÊ£ÓàÔªËØ
+    while(pa <= pa_last) *pc++ = *pa++; //æ’å…¥Laå‰©ä½™å…ƒç´ 
+    while(pb <= pb_last) *pc++ = *pb++; //æ’å…¥Lbå‰©ä½™å…ƒç´ 
 }//MergeList_Sq
 
 Status ListTraverse_Sq(struct SqList *L, Status (*visit)(ElemType*))
 {
-    //ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvisit()£¬Ò»µ©visit()Ê§°Ü£¬Ôò²Ù×÷Ê§°Ü
+    //ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°visit()ï¼Œä¸€æ—¦visit()å¤±è´¥ï¼Œåˆ™æ“ä½œå¤±è´¥
     int i = 0;
     if (ListEmpty_Sq(L) == TRUE)
         return ERROR;
@@ -607,7 +630,7 @@ Status ListTraverse_Sq(struct SqList *L, Status (*visit)(ElemType*))
 
 Status PrintList_Sq(struct SqList *L)
 {
-    //´òÓ¡Ë³Ğò±íL
+    //æ‰“å°é¡ºåºè¡¨L
     int i;
     for(i = 0; i < L->length; i++)
         printf("%d\t", *(L->elem + i));
