@@ -176,7 +176,7 @@ Status ListInsert_L(LinkList L, int i, ElemType e)
     {
         return ERROR;
     }
-    s = (LinkList)malloc(sizeof(struct LNode));      //生成新结点   
+    LinkList s = (LinkList)malloc(sizeof(struct LNode));      //生成新结点   
     if(!s) exit(OVERFLOW);                           
     s->data = e;
     s->next = p->next;                               //插入L中  
@@ -199,9 +199,9 @@ Status ListDelete_L(LinkList L, int i, ElemType *e)
     {                                                //删除位置不合理
         return ERROR;
     }
-    q = p->next;                                     //删除并释放结点
+    LinkList q = p->next;                                     //删除并释放结点
     p->next = q->next;
-    e = q->data;
+    *e = q->data;
     free(q);
     return OK;
 }//ListDelete_L
@@ -215,14 +215,14 @@ int compare(ElemType a, ElemType b)
 void MergeList_L(LinkList La, LinkList Lb, LinkList Lc, int (*compare)(ElemType, ElemType))
 {
     //已知单链表La和Lb的元素按值非递减排列
-    LNode *pa, *pb, *pc;
+    LinkList pa, pb, pc;
     
     pa = La->next;
     pb = Lb->next;
     Lc = pc = La;
     while(pa && pb)
     {
-        if ((*compare)(pa->data <= pb->data))
+        if ((*compare)(pa->data , pb->data))
         {
             pc->next = pa;
             pc = pa;
@@ -264,7 +264,7 @@ Status DestroyList_L(LinkList L)
 void ClearList_L(LinkList L)
 {
     //将L重置为空表
-    LNode *p;
+    LinkList p;
 
     if(!L) exit(ERROR);
     while(p = L->next)
@@ -273,7 +273,7 @@ void ClearList_L(LinkList L)
         L = p;
     }
     L->data = 0;
-    return OK;
+    // return OK;
 }
 
 Status ListEmpty_L(LinkList L)
@@ -307,7 +307,7 @@ int LocateElem_L(LinkList L, ElemType e, int (*compare)(ElemType, ElemType))
 {
     //在单链表L中查找第1个值与e满足compare()的元素的位序
     int n = 0;
-    LNode *p = L->next;
+    LinkList p = L->next;
 
     if(!L) return n;
     while(p && (*compare)(p->data, e))
@@ -320,36 +320,31 @@ int LocateElem_L(LinkList L, ElemType e, int (*compare)(ElemType, ElemType))
 
 Status PriorElem_L(LinkList L, ElemType cur_e, ElemType **pre_e)
 {
-    //返回cur_e的前驱节点pre_e
-    LNode *p;
+    // //返回cur_e的前驱节点pre_e
+    // LinkList p;
 
-    if(!L) return ERROR;
-    while(p = L->next && (*compare)(p->data, e))
-    {                                               //pre_e为最后一个结点或cur_e的前驱节点pre_e
-        L= L->next;
-    }
-    *pre_e = L;
-    return OK;
+    // if(!L) return ERROR;
+    // while(p = L->next && (*compare)(p->data, pre_e))
+    // {                                               //pre_e为最后一个结点或cur_e的前驱节点pre_e
+    //     L= L->next;
+    // }
+    // *pre_e = L;
+    // return OK;
 }
+//todo: 逻辑不对, 重构 by:AW
 
 Status NextElem_L(LinkList L, ElemType cur_e, ElemType **next_e)
 {
-    //返回cur_e的后继节点next_e
-    if(!L) return ERROR;
-    while(L->next && (*compare)(L->data, e))
-    {                                               //next_e为最后一个结点或cur_e的后继节点next_e
-        L= L->next;
-    }
-    *pre_e = L->next;
     return OK;
 }
+//todo: 完全不合要求, 修改函数定义重做
 
 Status ListTraverse_L(LinkList L, Status (*visit)(ElemType*))
 {
     //依次对L的每个数据元素调用函数visit()，一旦visit()失败，则操作失败
     if(ListEmpty_L(L) == TRUE)
         return ERROR;
-    while(L->next && visit(L) == OK)
+    while(L->next && visit(&L->data) == OK)
         L = L->next;
     if (!L)
     {
@@ -361,7 +356,7 @@ Status ListTraverse_L(LinkList L, Status (*visit)(ElemType*))
     }
 }
 
-Status PrintList_L(LinkList)
+Status PrintList_L(LinkList L)
 {
     //打印单链表L
     while(L)
