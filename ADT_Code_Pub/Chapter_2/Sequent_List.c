@@ -218,7 +218,7 @@ Status ListTraverse_Sq(struct SqList *L, Status (*visit)(ElemType*))
         return ERROR;
     while(i < L->length && visit(L->elem + i) == OK)
         i++;
-    if(i > L->length) return OK;
+    if(i >= L->length) return OK;
     else return ERROR;
 }
 
