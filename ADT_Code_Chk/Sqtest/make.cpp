@@ -1,24 +1,25 @@
+#pragma GCC diagnostic error "-std=c++11"
 #include<bits/stdc++.h>
 #define random(x) (rand()%x)
-const int n = 15;           //³õÊ¼¶ÓÁĞ²åÈëÔªËØ¸öÊı
-const int L = 15;          //³õÊ¼²åÈëÍâ£¬ÃüÁî×Ü¸öÊı
-const int randomMax = 200;  //ÔªËØ×î´óÖµ + 1
+const int n = 15;           //åˆå§‹é˜Ÿåˆ—æ’å…¥å…ƒç´ ä¸ªæ•°
+const int L = 15;          //åˆå§‹æ’å…¥å¤–ï¼Œå‘½ä»¤æ€»ä¸ªæ•°
+const int randomMax = 200;  //å…ƒç´ æœ€å¤§å€¼ + 1
 int main()
 {
-    srand((int)time(0));    //Ëæ»úÊıÖÖ×Ó
+    srand((int)time(0));    //éšæœºæ•°ç§å­
 
-    freopen("Sqtest.in","w",stdout);  //Êä³öµ½ÎÄ¼ş
+    freopen("Sqtest.in","w",stdout);  //è¾“å‡ºåˆ°æ–‡ä»¶
 
     printf("%d\n",L + n + 1);
 
     printf("0\n");
-    //ÒÔInsertµÄĞÎÊ½½øĞĞ²åÈë
+    //ä»¥Insertçš„å½¢å¼è¿›è¡Œæ’å…¥
     for(int i = 1;i <= n;++i)
         printf("8 %d %d\n",i,random(randomMax));
 
     for(int i = 1;i <= L;++i)
     {
-        int x = random(10) + 1; //²»ÒªInitÃüÁî
+        int x = random(10) + 1; //ä¸è¦Initå‘½ä»¤
         switch(x){
             case 0://Init
                 printf("0\n");
