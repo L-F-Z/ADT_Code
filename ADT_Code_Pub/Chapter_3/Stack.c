@@ -50,53 +50,10 @@ Status PrintStack(struct SqStack*);
     //打印栈S
 //-----------------------------
 
-//-----Private-Func-for-Testing------//
-Status _sqr(SElemType *elem)
-{
-  *elem *= *elem;
-  return TRUE;
-}
-//--End-of-Private-Func-for-Testing--//
 int main()
 {
-//--------------Testing--------------//
-    struct SqStack stack;
-    SElemType temp_pop_elem;
-    printf("****Start simple testing****：\n");
-    printf("****************************\n");
-    printf("InitStack     %d\n", InitStack(&stack));
-    printf("GetTop %d     %d\n", temp_pop_elem, GetTop(&stack, &temp_pop_elem));
-    printf("Is empty?     %d\n", StackEmpty(&stack));
-    for(int i=-2;i<=2;i++)
-      printf("Push %d       %d\n", i, Push(&stack, i));
-    printf("PrintStack    %d\n", PrintStack(&stack));
-    printf("Is empty?     %d\n", StackEmpty(&stack));
-    printf("GetTop %d     %d\n", temp_pop_elem, GetTop(&stack, &temp_pop_elem));
-
-    printf("\nIn-place square operation\n");
-    printf("StackTraverse %d\n", StackTraverse(&stack, _sqr));
-    printf("PrintStack    %d\n", PrintStack(&stack));
-
-    printf("\nPop all         \n");
-    while(Pop(&stack, &temp_pop_elem))
-      printf("Pop out %d    \n", temp_pop_elem);
-
-    printf("\nDestroyStack  %d\n", DestroyStack(&stack));
-    printf("ClearStack      %d\n", ClearStack(&stack));
-    printf("Is empty?     %d\n", StackEmpty(&stack));
-
-    printf("\n\n***Start extreme testing****：\n");
-    printf("****************************\n");
-    printf("push -100~100 into stack,\n201 numbers in tatal\n");
-    for(int i=-100;i<=100;i++)
-      Push(&stack, i);
-    printf("StackLength = %d\n", StackLength(&stack));
-    printf("stacksize =   %d\n", stack.stacksize);
-
-
-//--------The-End-of-Testing---------//
+    return 0;
 }
-
 
 //-----------------------------
 Status InitStack(struct SqStack *S)
