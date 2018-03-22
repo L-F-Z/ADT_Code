@@ -47,5 +47,5 @@
 |静态链表|Static_Linked_List.c|李奉治|穆热迪力 曾鸿斌|冯毅飞|
 |循环链表|Circular_Linked_List.c|王华强|高云聪 资威|高云聪|
 |双向链表|Double_Linked_List.c|韩雨|陈灿宇 胡靖宇 邱林 曾鸿斌|韩雨 陈灿宇|
-|动态栈|Stack.c|李奉治|李奉治 穆热迪力|谢本
+|动态栈|Stack.c|李奉治|李奉治 穆热迪力|谢本壹||
 
