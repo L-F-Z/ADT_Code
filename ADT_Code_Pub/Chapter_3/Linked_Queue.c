@@ -1,3 +1,7 @@
+//LINKED_QUEUE
+//https://github.com/L-F-Z/ADT_Code
+//Developed by UCAS ADT_Code Group
+
 #ifndef LINKED_QUEUE_C 
 #define LINKED_QUEUE_C
 
@@ -17,32 +21,42 @@ typedef int Status;
 
 //---------|Typedef|-----------
 typedef int ElemType; //存储的数据类型
-typedef struct QNode
+typedef struct QNode //链式队列节点
 {
     ElemType data;      //数据域
     struct QNode *next; //指针域，指向下一个节点
 } QNode, *QNodeptr;
-typedef struct _LinkQueue_struct
+typedef struct _LinkQueue_struct //链式队列头
 {
     QNodeptr front;
     QNodeptr rear;
-} * LinkQueue;
+} * LinkQueue;//链式队列头节点指针
 //-----------------------------
 //定义的新的变量类型首字母大写
 
 //---------|FuncList|----------
 Status InitQueue(LinkQueue* Q);
+//生成一个新的链式队列
 Status DestoryQueue(LinkQueue Q);
+//销毁一个链式队列
 Status ClearQueue(LinkQueue Q);
+//清空链式队列, 保留队列头
 Status QueueEmpty(LinkQueue Q);
+//返回队列是否为空, 若为空返回TRUE
 int QueueLength(LinkQueue Q);
+//返回链式队列长度
 Status GetHead(LinkQueue Q, ElemType *E);
+//返回队列头元素值
 Status EnQueue(LinkQueue Q, ElemType E);
+//将新元素进入队列尾
 Status DeQueue(LinkQueue Q, ElemType *E);
+//将首元素离开队列
 Status QueueTraverse(LinkQueue Q, void visit(ElemType e));
+//对队列的每个元素应用函数visit
 //-----------------------------
 
 Status InitQueue(LinkQueue* Q)
+//生成一个新的链式队列
 {
     *Q = (LinkQueue)malloc(sizeof(struct _LinkQueue_struct));
     (*Q)->front = (*Q)->rear = (QNodeptr)malloc(sizeof(QNode));
@@ -53,6 +67,7 @@ Status InitQueue(LinkQueue* Q)
 }
 
 Status DestoryQueue(LinkQueue Q)
+//销毁一个链式队列
 {
     while (Q->front)
     {
@@ -64,6 +79,7 @@ Status DestoryQueue(LinkQueue Q)
 }
 
 Status ClearQueue(LinkQueue Q)
+//清空链式队列, 保留队列头
 {
     if (!Q)
         return OVERFLOW;
@@ -81,11 +97,13 @@ Status ClearQueue(LinkQueue Q)
 }
 
 Status QueueEmpty(LinkQueue Q)
+//返回队列是否为空, 若为空返回TRUE
 {
     return Q->rear == Q->front;
 }
 
 int QueueLength(LinkQueue Q)
+//返回链式队列长度
 {
     if (!Q)
         return -1;
@@ -100,6 +118,7 @@ int QueueLength(LinkQueue Q)
 }
 
 Status GetHead(LinkQueue Q, ElemType *E)
+//返回队列头元素值
 {
     if (!Q || Q->rear == Q->front)
         return OVERFLOW;
@@ -108,6 +127,7 @@ Status GetHead(LinkQueue Q, ElemType *E)
 }
 
 Status EnQueue(LinkQueue Q, ElemType E)
+//将新元素进入队列尾
 {
     QNodeptr p = (QNodeptr)malloc(sizeof(QNode));
     if (!p)
@@ -120,6 +140,7 @@ Status EnQueue(LinkQueue Q, ElemType E)
 }
 
 Status DeQueue(LinkQueue Q, ElemType *E)
+//将首元素离开队列
 {
     if (Q->front == Q->rear)
         return ERROR;
@@ -133,6 +154,7 @@ Status DeQueue(LinkQueue Q, ElemType *E)
 }
 
 Status QueueTraverse(LinkQueue Q, void visit(ElemType e))
+//对队列的每个元素应用函数visit
 {
     if ((!Q) || (Q->front == Q->rear))
         return ERROR;
