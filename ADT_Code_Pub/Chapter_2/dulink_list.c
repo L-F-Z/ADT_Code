@@ -91,7 +91,7 @@ Status InitList_DuL(DuLList *L){
     return OK;
 }//InitList_DuL
 
-Status DstroyList_DuL(DuLList *L)
+Status DstroyList_DuL(DuLList *L)//todo
 {
     //销毁双向链表L
     DuLList p = *L;
