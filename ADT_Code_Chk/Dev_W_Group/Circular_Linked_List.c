@@ -13,7 +13,6 @@ typedef int Status;
 #define INFEASIBLE -1
 #define OVERFLOW -2
 //-----------------------------
-
 //---------|Typedef|-----------
 typedef int ElemType; //单链表存储的数据类型
 struct LNode_C
@@ -24,12 +23,10 @@ struct LNode_C
 typedef struct LNode_C *Position; //单链表节点存储的位置
 typedef struct LNode_C *LinkList_C;
 //-----------------------------
-//定义的新的变量类型首字母大写
+//定义的新的变量类型首字母大写----------------------
 
 //---------|FuncList|----------
-//这里实现的是带头结点的线性链表, 这是基本的函数列表
-
-Status InitList_C(LinkList_C L);
+Status InitList_C(LinkList_C *L);
 //构造一个空的顺序表L
 Status DestroyList_C(LinkList_C L);
 //销毁顺序表L
@@ -61,14 +58,15 @@ Status PrintList_C(LinkList_C L);
 //打印顺序表L
 //-----------------------------
 
-Status InitList_C(LinkList_C L) //2.3
+//-----------------------------
+Status InitList_C(LinkList_C *L) //2.3
 {
     //输入参数是一个LinkList_C类型的变量L
     //函数把L初始化成一个循环链表
-    L = (LinkList_C)malloc(sizeof(struct LNode_C));
-    if (!L)
+    *L = (LinkList_C)malloc(sizeof(struct LNode_C));
+    if (!*L)
         exit(OVERFLOW);
-    L->next = L;
+    (*L)->next = *L;
     return OK;
 } //构造一个空的顺序表L
 Status DestroyList_C(LinkList_C L)
@@ -123,12 +121,12 @@ int ListLength_C(LinkList_C L)
     //输入是一个LinkList类型的变量L
     //输出是一个int整数，为链表的元素个数
     int i;
-    LinkList_C temp;
+    LinkList_C temp = L->next;
     if (!L)
         exit(OVERFLOW);
     if (!L->next)
         exit(OVERFLOW);
-    for (i = 1, temp = L->next; temp != L; i++)
+    for (i = 1; temp != L; i++)
         temp = temp->next;
     return i;
 } //返回L中数据元素的个数
@@ -227,7 +225,7 @@ Status ListInsert_C(LinkList_C L, int i, ElemType e)
         return ERROR;
     else if (i = 1)
     {
-        for (j = 1; j != n; i++)
+        for (j = 1; j != n; j++)
             p = p->next;
         temp = (LinkList_C)malloc(sizeof(struct LNode_C));
         p->next = temp;
@@ -237,7 +235,7 @@ Status ListInsert_C(LinkList_C L, int i, ElemType e)
     }
     else
     {
-        for (j = 1; j != i; i++, p = p->next)
+        for (j = 1; j != i; j++, p = p->next)
             temp = p;
         temp1 = (LinkList_C)malloc(sizeof(struct LNode_C));
         temp->next = temp1;
@@ -278,7 +276,7 @@ Status ListDelete_C(LinkList_C L, int i, ElemType *e)
 }
 //在循环表L中删除第i个元素，并用e返回其值
 
-Status CreatList_C(LinkList_C L, int n) //函数返回Status类型
+Status CreatList_C(LinkList_C *L, int n) //函数返回Status类型
 {
     //逆位序输入n个元素的值，建立带表头节点的单链线性表L
     //函数体首行写函数功能
@@ -286,18 +284,18 @@ Status CreatList_C(LinkList_C L, int n) //函数返回Status类型
     //建议考虑一下复杂度和函数用时, 比如malloc操作就很费时间
     int i;
     LinkList_C p;
-    L = (LinkList_C)malloc(sizeof(struct LNode_C));
-    if (!L)
+    *L = (LinkList_C)malloc(sizeof(struct LNode_C));
+    if (!*L)
         exit(OVERFLOW);
-    L->next = NULL; //先建立一个带头结点的单链表
+    (*L)->next = NULL; //先建立一个带头结点的单链表
     for (i = n; i > 0; i--)
     {
         p = (LinkList_C)malloc(sizeof(struct LNode_C)); //生成新结点
         if (!p)
             exit(OVERFLOW);
         scanf("%d", &p->data); //输入元素值 issue:未考虑ElemType
-        p->next = L->next;     //插入到表头
-        L->next = p;
+        p->next = (*L)->next;     //插入到表头
+        (*L)->next = p;
     }
     return OK;
 } //ClearList_C
@@ -365,8 +363,42 @@ Status PrintList_C(LinkList_C L)
     printf("\n");
 } //PrintList_C
 
+
+#include"lazy.h"
 int main()
 {
+
+    LinkList_C L;
+    CreatList_C(&L, 3);
+    int a;
+    ListInsert_C(L, 2, 33);
+    GetElem_C(L, 2, &a);
+    CK(a);
+    ListDelete_C(L, 1, &a);
+    CK(a);
+    LinkList_C LL;
+    CreatList_C(&LL, 2);
+    LinkList_C LLL;
+    MergeList_C(L, LL, LLL, compare);
+    LinkList_C Q;
+    InitList_C(&Q);
+    PrintList_C(Q);
+    DestroyList_C(L);
+    ClearList_C(Q);
+    
+    a=ListEmpty_C(Q);
+    CK(a);
+    ListLength_C(LL);
+    CK(LocateElem_C(LL, 1, compare));
+    
+    
+    PriorElem_C(LL, 1, &a);
+    NextElem_C(LL, 1, &a);
+    Status mprint(int* t)
+    {
+        printf("%d ", *t);
+    }
+    ListTraverse_C(LL, mprint);
     return 0;
 }
 
