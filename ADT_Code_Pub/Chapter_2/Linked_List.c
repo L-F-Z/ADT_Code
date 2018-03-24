@@ -1,3 +1,7 @@
+//LINKED_LIST
+//https://github.com/L-F-Z/ADT_Code
+//Developed by UCAS ADT_Code Group
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
