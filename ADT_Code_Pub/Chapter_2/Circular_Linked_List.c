@@ -395,42 +395,42 @@ Status PrintList_C(LinkList_C L)
     printf("\n");
 } //PrintList_C
 
-#include "lazy.h"
-int main()
-{
+// #include "lazy.h"
+// int main()
+// {
 
-    LinkList_C L;
-    CreatList_C(&L, 3);
-    int a;
-    ListInsert_C(L, 2, 33);
-    GetElem_C(L, 2, &a);
-    CK(a);
-    ListDelete_C(L, 1, &a);
-    CK(a);
-    LinkList_C LL;
-    CreatList_C(&LL, 2);
-    LinkList_C LLL;
-    MergeList_C(L, LL, LLL, compare);
-    LinkList_C Q;
-    InitList_C(&Q);
-    PrintList_C(Q);
-    DestroyList_C(L);
-    ClearList_C(Q);
+//     LinkList_C L;
+//     CreatList_C(&L, 3);
+//     int a;
+//     ListInsert_C(L, 2, 33);
+//     GetElem_C(L, 2, &a);
+//     CK(a);
+//     ListDelete_C(L, 1, &a);
+//     CK(a);
+//     LinkList_C LL;
+//     CreatList_C(&LL, 2);
+//     LinkList_C LLL;
+//     MergeList_C(L, LL, LLL, compare);
+//     LinkList_C Q;
+//     InitList_C(&Q);
+//     PrintList_C(Q);
+//     DestroyList_C(L);
+//     ClearList_C(Q);
 
-    a = ListEmpty_C(Q);
-    CK(a);
-    ListLength_C(LL);
-    CK(LocateElem_C(LL, 1, compare));
+//     a = ListEmpty_C(Q);
+//     CK(a);
+//     ListLength_C(LL);
+//     CK(LocateElem_C(LL, 1, compare));
 
-    PriorElem_C(LL, 1, &a);
-    NextElem_C(LL, 1, &a);
-    Status mprint(int *t)
-    {
-        printf("%d ", *t);
-    }
-    ListTraverse_C(LL, mprint);
-    return 0;
-}
+//     PriorElem_C(LL, 1, &a);
+//     NextElem_C(LL, 1, &a);
+//     Status mprint(int *t)
+//     {
+//         printf("%d ", *t);
+//     }
+//     ListTraverse_C(LL, mprint);
+//     return 0;
+// }
 
 //完整版函数
 
