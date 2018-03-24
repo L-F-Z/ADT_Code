@@ -1,3 +1,15 @@
+//STATIC_LINKED_LIST
+//https://github.com/L-F-Z/ADT_Code
+//Developed by UCAS ADT_Code Group
+
+//
+
+
+//！！！！！本代码可能不稳定，请等待更新！！！！！
+
+
+//
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>

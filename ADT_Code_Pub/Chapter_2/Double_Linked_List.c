@@ -1,20 +1,6 @@
-/*开发说明：
-    ddl:3.22(周四) 23:00之前提交给负责人 由负责人和负责测试的同学在周五完成测试
-
-    任务1：DstroyList_DuL ~ ListLength_DuL 共4个
-    任务2：Prior_DuL ~ LocateElem_DuL 共4个
-    任务3：GetCurElem_DuL ~ Append_DuL 共3个
-    任务4：InsAfter_DuL ~ MergeList_DuL 共3个
-
-    函数格式请参照已完成的测试函数，//////并添加注释//////
-    编辑代码时//////请不要使用TAB进行缩进，请使用空格代替//////
-    提交前请用测试函数完成基本的测试
-
-    mark:
-        注意到一些函数传递的是地址，而一些函数传递的是参数
-        如果有仅需传参数而在声明中传递了地址，或者需要传递地址却传递了参数，可以自行修改并与负责人联系
-        模板存在其他问题，或认为有其他重要函数需要添加，或有技术上的问题，请与负责人联系
-*/
+//DOUBLE_LINKED_LIST
+//https://github.com/L-F-Z/ADT_Code
+//Developed by UCAS ADT_Code Group
 
 
 #include <stdio.h>
