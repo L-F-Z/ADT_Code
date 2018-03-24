@@ -110,9 +110,9 @@ int Free_SL(SLinkList space, int k)
     return OK;
 }//Free_SL
 
-Status InitList_SL(SLinkList space)//todo fix rem
+Status InitList_SL(SLinkList space)
 {
-    //构造一个空的静态链表
+    //初始化静态链表所用的数组空间
     //将一维数组space中各分量链成一个备用链表，space[0].cur为头指针
     //"0"表示空指针
     int i;
@@ -139,10 +139,9 @@ int CreateList(SLinkList space, int n)
     return head;
 }
 
-Status ClearList_SL(SLinkList space)//todo
+Status ClearList_SL(SLinkList space)
 {
-    //重置为空表
-    if(!space[0].cur) return ERROR;//已是空表 //todo
+    //强制重置为空表
     return InitList_SL(space);
 }//ClearList_SL
 
@@ -180,47 +179,51 @@ Status Locatepos_SL(SLinkList space, int head, int i, ElemType *e)
     return OK;
 }//Locatepos_SL
 
-Status Prior_SL(SLinkList space, int head, int i,ElemType* e)//todo space dim?
+Status Prior_SL(SLinkList space, int head, int *cur,ElemType* e)
 {
     //改变当前指针指向其前驱，错误则返回0
-    if(i < 0 || i > MAXSIZE - 1) return 0; //i不合法
+    if(*cur < 0 || *cur > MAXSIZE - 1) return OVERFLOW; //*cur不合法
     int pr;
     int k = head;
-    for(pr = 0; space[k].cur != i; )
+    for(pr = 0; space[k].cur != (*cur)&&space[k].cur!=0; )
     {
         pr = k;
         k = space[k].cur;
     }
-	*e = space[k].data;
+    if(space[k].cur==0)
+        return ERROR;
+    *e = space[k].data;
+    *cur = k;
     return OK;
 }//Prior_SL
 
-Status Next_SL(SLinkList space, int head, int i,ElemType* e)//todo rem
+Status Next_SL(SLinkList space, int head, int* cur,ElemType* e)
 {
     //改变当前指针指向其后继，错误则返回0
 	int k;
-	if(!GetIndex_SL(space,head,i,&k))
+	if(!GetIndex_SL(space,head,*cur,&k))
 	  return ERROR;
 	k = space[k].cur;
 	if(!k)
 	  return ERROR;
 	*e = space[k].data;
-	return OK;
+    *cur = k;
+    return OK;
 }//Next_SL
 
 Status ListTraverse_SL(SLinkList space, int head, Status (*visit)(ElemType*))
 {
     //对每个元素调用函数visit,一旦visit()失败，则操作失败
     int i,k = space[head].cur;
-    for(i = 0; i < ListLength_SL(space,head) && visit(&space[k].data); i++, k = space[k].cur)//todo ...
+    for(i = 0; k && visit(&space[k].data); i++, k = space[k].cur)
         ;
     if(i < ListLength_SL(space,head)) return ERROR;
     else return OK;
 }//ListTraverse_SL
 
-int LocateElem_SL(SLinkList space,int head, ElemType e, int(*compare)(ElemType, ElemType))//todo bad mem
+int LocateElem_SL(SLinkList space,int head, ElemType e, int(*compare)(ElemType, ElemType))
 {
-    //若存在与e满足函数compare()判定关系的元素，则移动当前指针指向第一个满足条件的元素，并返回OK，否则返回ERROR
+    //若存在与e满足函数compare()判定关系的元素，则返回该元素在链表中的的排列次序
     int i,k;
     for(i = 1,k = space[head].cur; !compare(e,space[k].data)||!k; i++,k = space[k].cur)
         ;
@@ -248,7 +251,7 @@ Status SetCurElem_SL(SLinkList space, int i, ElemType e)
     return OK;
 }//SetCurElem_SL
 
-Status Append_SL(SLinkList space, int head, int s)//todo fix match
+Status Append_SL(SLinkList space, int head, int s)
 {
     //应该提供的是int s而非SLinkList s吧
     //s指向的一串节点连接在最后一个节点之后
@@ -263,10 +266,10 @@ Status Append_SL(SLinkList space, int head, int s)//todo fix match
 
 Status InsAfter_SL(SLinkList space,int head ,int i, ElemType e)
 {
-    //将元素e插入在当前指针之后
+    //将元素e插入在第i个元素之后
     if(i < 1 || i > MAXSIZE-1) return ERROR;  //i不合法
 	int tmp;
-	if(!GetIndex_SL(space,head,i,&tmp))//todo i的定义? XX
+	if(!GetIndex_SL(space,head,i,&tmp))
 	  return ERROR;
 	i = tmp;
     int k = Malloc_SL(space);
@@ -276,9 +279,9 @@ Status InsAfter_SL(SLinkList space,int head ,int i, ElemType e)
     return OK;
 }//InsAfter_SL
 
-Status DelAfter_SL(SLinkList space,int head, int i,ElemType* e)//todo: ditto   i的定义?
+Status DelAfter_SL(SLinkList space,int head, int i,ElemType* e)
 {
-    //删除当前指针之后的节点
+    //删除第i个元素之后之后的节点
     if(i < 1 || i > MAXSIZE-1) return ERROR;  //i不合法
 	int k;
 	if(!GetIndex_SL(space,head,i,&k))
@@ -314,50 +317,6 @@ void MergeList_SL(SLinkList space, int a, int b, int c, int (*compare)(ElemType,
     if(pb)
         space[pc].cur = pb;
 }//MergeList_SL
-
-void Difference_SL(SLinkList space, int *s)//todo: del
-{
-    //依次输入集合A和B的元素，在一维数组space中建立表示集合(A-B)∪(B-A)的静态链表，s为其头指针
-    InitList_SL(space);
-    *s = Malloc_SL(space);
-    int r = *s;
-    int m, n;
-    scanf("%d", &m);
-    scanf("%d", &n);
-    //建立集合A的链表
-    int i, j;
-    for(j = 1; j <= m; ++j)//todo: dealwith overflow
-    {
-        i = Malloc_SL(space);
-        scanf("%d", &space[i].data);
-        space[r].cur = i;
-        r = i;
-    }
-    space[r].cur = 0;
-    //依次输入集合B的元素，若在A中则删除，否则插入
-    int b, p, k;//todo: anno plz.......
-    for(j = 1; j <= n; ++j)
-    {
-        scanf("%d", &b);
-        p = *s;
-        k = space[*s].cur;
-        while(k != space[r].cur && space[k].data != b)
-            p = k, k = space[k].cur;
-        if(k == space[r].cur)
-        {
-            i = Malloc_SL(space);
-            space[i].data = b;
-            space[i].cur = space[r].cur;
-            space[r].cur = i;
-        }
-        else
-        {
-            space[p].cur = space[k].cur;
-            Free_SL(space, k);
-            if(r == k) r = p; //删除的是r所指节点，需改变r
-        }
-    }
-}//Difference_SL
 
 int compare(ElemType a, ElemType b)
 {

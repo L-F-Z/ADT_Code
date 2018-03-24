@@ -2,6 +2,8 @@
 //https://github.com/L-F-Z/ADT_Code
 //Developed by UCAS ADT_Code Group
 
+//!警告:为了使用方便, 链队列的数据定义与严蔚敏<数据结构>上的有微小差异, 使用时请注意!
+
 #ifndef LINKED_QUEUE_C 
 #define LINKED_QUEUE_C
 
@@ -172,6 +174,7 @@ void _test(int i)
     printf("%d ", i);
 }
 
+// 单元测试, 处理注释时删去
 // #include"lazy.h"
 // int main()
 // {
