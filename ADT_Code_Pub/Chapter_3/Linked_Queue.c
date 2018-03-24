@@ -58,7 +58,7 @@ Status QueueTraverse(LinkQueue Q, void visit(ElemType e));
 Status InitQueue(LinkQueue* Q)
 //生成一个新的链式队列
 {
-    *Q = (LinkQueue)malloc(sizeof(struct _LinkQueue_struct));
+    if(!(*Q = (LinkQueue)malloc(sizeof(struct _LinkQueue_struct))))return ERROR;
     (*Q)->front = (*Q)->rear = (QNodeptr)malloc(sizeof(QNode));
     if (!(*Q)->front)
         exit(OVERFLOW);
@@ -153,7 +153,7 @@ Status DeQueue(LinkQueue Q, ElemType *E)
     return OK;
 }
 
-Status QueueTraverse(LinkQueue Q, void visit(ElemType e))
+Status QueueTraverse(LinkQueue Q, void (*visit)(ElemType e))
 //对队列的每个元素应用函数visit
 {
     if ((!Q) || (Q->front == Q->rear))

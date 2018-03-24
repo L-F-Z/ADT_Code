@@ -276,13 +276,14 @@ Status InsAfter_DuL(DuLList L, ElemType e){
 Status DelAfter_DuL(DuLList L, ElemType *e){
     if(L == NULL || L->next == NULL) return ERROR;
     *e = L->next->data;
-    if(L->next->next == NULL){
-        free(L->next);
-        L->next = NULL;
-        return OK;
-    }
+    // if(L->next->next == NULL){
+    //     free(L->next);
+    //     L->next = NULL;
+    //     return OK;
+    // }
+    DuLList t = L->next;
     L->next = L->next->next;
-    free(L->next->prior);
+    free(t);
     L->next->prior = L;
     return OK;
 }//DelAfter_DuL
