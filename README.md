@@ -58,6 +58,6 @@ TODO LIST
 |链栈|Linked_Stack.c|穆热迪力|穆热迪力|陈灿宇|||||
 |循环队列|Circular_Queue.c|资威|资威|谢本壹|||||
 |链队列|Linked_Queue.c|王华强|王华强|李奉治|||阶段1完成|李奉治|
-|串(定长顺序)|Static_String.c|王华强|王华强 丘林 韩雨 高云聪|王华强||阶段一进行中|
+|串(定长顺序)|Static_String.c|王华强|王华强 丘林 韩雨 高云聪|王华强|||阶段一进行中|
 |串(堆分配)|Heap_String.c|冯毅飞|
 
