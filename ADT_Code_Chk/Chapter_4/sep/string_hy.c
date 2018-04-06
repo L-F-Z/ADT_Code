@@ -21,20 +21,20 @@ typedef int Status;
 //-----------------------------
 
 //---------|Typedef|-----------
-//ä½¿ç”¨char[]ä½œä¸ºå­—ç¬¦ä¸²çš„æ•°æ®ç»“æ„, å­—ç¬¦ä¸²è¦æ±‚åŒCè¯­è¨€è¦æ±‚, ä»¥0ç»“å°¾.
+//Ê¹ÓÃchar[]×÷Îª×Ö·û´®µÄÊı¾İ½á¹¹, ×Ö·û´®ÒªÇóÍ¬CÓïÑÔÒªÇó, ÒÔ0½áÎ².
 typedef char *String_C;
 //-----------------------------
-//å®šä¹‰çš„æ–°çš„å˜é‡ç±»å‹é¦–å­—æ¯å¤§å†™
+//¶¨ÒåµÄĞÂµÄ±äÁ¿ÀàĞÍÊ××ÖÄ¸´óĞ´
 
 //---------|Constdef|----------
 #define BUFSIZE 1024
 //-----------------------------
 
 //---------|FuncList|----------
-//æ‰€æœ‰å‡½æ•°è¦æ±‚å’Œä¹¦ä¸Šä¸€æ ·
-//å†™å‡½æ•°çš„æ—¶å€™éº»çƒ¦é¡ºä¾¿æŠŠä¹¦ä¸Šæ³¨é‡Šä¹ŸæŠ„äº†(ç¬‘)
+//ËùÓĞº¯ÊıÒªÇóºÍÊéÉÏÒ»Ñù
+//Ğ´º¯ÊıµÄÊ±ºòÂé·³Ë³±ã°ÑÊéÉÏ×¢ÊÍÒ²³­ÁË(Ğ¦)
 
-//é«˜äº‘èª
+//¸ßÔÆ´Ï
 Status StrAssign(String_C *S, char *src);
 Status StrInput(String_C *S);
 Status StrCopy(String_C *S, String_C src);
@@ -45,23 +45,23 @@ Status ClearString(String_C *S);
 Status Concat(String_C *dist, String_C S1, String_C S2);
 Status SubString(String_C *dist, String_C S, int pos, int len);
 
-//ä¸˜æ—
+//ÇğÁÖ
 Status Index(String_C S, String_C T, int pos);
 Status Replace(String_C *S, String_C T, String_C V);
 Status StrInsert(String_C *S, int pos, String_C T);
 Status StrDelete(String_C *S, int pos, int len);
 Status DestoryString(String_C *S);
 
-//éŸ©é›¨
+//º«Óê
 Status StrPrint(String_C S);
 Status Index_KMP(String_C S, String_C C, int pos);
-//æµ‹è¯•ä»£ç 
+//²âÊÔ´úÂë
 
 void get_next(String_C T, int next[]);
 int char_string_length(char *C);
 //-----------------------------
 
-int char_string_length(char *C) //è¿”å›ä¸€ä¸ªcharå­—ç¬¦ä¸²çš„é•¿åº¦
+int char_string_length(char *C) //·µ»ØÒ»¸öchar×Ö·û´®µÄ³¤¶È
 {
     int cnt = 0;
     while (*C)
@@ -72,7 +72,7 @@ int char_string_length(char *C) //è¿”å›ä¸€ä¸ªcharå­—ç¬¦ä¸²çš„é•¿åº¦
     return cnt;
 }
 
-Status StrAssign(String_C *S, char *src) //ç”¨char*å­—ç¬¦ä¸²åˆå§‹åŒ–char*å­—ç¬¦ä¸²
+Status StrAssign(String_C *S, char *src) //ÓÃchar*×Ö·û´®³õÊ¼»¯char*×Ö·û´®
 {
     int len = char_string_length(src);
     if (*S = (String_C)malloc(sizeof(char) * (len + 1)))
@@ -83,7 +83,7 @@ Status StrAssign(String_C *S, char *src) //ç”¨char*å­—ç¬¦ä¸²åˆå§‹åŒ–char*å­—ç¬¦
     return ERROR;
 }
 
-Status StrInput(String_C *S)//ä½¿ç”¨scanfåˆ›å»ºå­—ç¬¦ä¸²
+Status StrInput(String_C *S)//Ê¹ÓÃscanf´´½¨×Ö·û´®
 {
     char buf[BUFSIZE];
     scanf("%s", buf);
@@ -103,20 +103,54 @@ Status StrInput(String_C *S)//ä½¿ç”¨scanfåˆ›å»ºå­—ç¬¦ä¸²
     return ERROR;
 }
 
-Status StrPrint(String_C S)//æ‰“å°å­—ç¬¦ä¸²
+Status StrPrint(String_C S)//´òÓ¡×Ö·û´®
 {
     printf("%s", S);
     return OK;
 }
 
+int next[BUFSIZE];
+
+void get_next(String_C T, int next[]){
+    //ÇóÄ£Ê½´®TµÄnextº¯ÊıÖµ²¢´æÈëÊı×énext
+    int i, j = 0, l = char_string_length(T);
+    next[0] = 0;
+    for(i = 1; i < l;++i)
+    {
+        while (j > 0 && T[i] != T[j]) j = next[j - 1];
+        if (T[i] == T[j]) ++j;
+        next[i] = j;
+    }
+}//get_next
+
+int Index_KMP(String_C S, String_C T,int pos){
+    //ÀûÓÃÄ£Ê½´®TµÄnextº¯ÊıÇóTÔÚÖ÷´®SµÚpos¸ö×Ö·ûÖ®ºóµÄÎ»ÖÃµÄ
+    //  KMPËã·¨¡£ÆäÖĞ£¬T·Ç¿Õ£¬0<=pos<=StrLength(S) - 1
+    int i = pos,  j = 0, ls = char_string_length(S), lt = char_string_length(T);
+    get_next(T, next);
+    for(i = 0;i < ls;++i)
+    {
+        while(j > 0 && T[j] != S[i]) j = next[j - 1];
+        if (T[j] == S[i]) ++j;
+        if (j == lt) return i - lt + 1;
+    }
+    return -1;
+}//Index_KMP
+
 //for debug
 int main()
 {
+    /*
     String_C a;
     StrInput(&a);
     StrPrint(a);
     StrAssign(&a, "2333333");
-    StrPrint(a);
+    StrPrint(a);*/
+
+    String_C a ,b;
+    StrInput(&a);
+    StrInput(&b);
+    printf("%d",Index_KMP(a, b, 0));
 }
 
 #endif
