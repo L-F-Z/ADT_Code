@@ -3,6 +3,7 @@
 //Developed by UCAS ADT_Code Group
 
 //AW: I highly recommend string in cpp. These functions work well with normal char string in C.
+//Some of the functions may have bugs.
 
 #ifndef CHAR_STRING
 #define CHAR_STRING

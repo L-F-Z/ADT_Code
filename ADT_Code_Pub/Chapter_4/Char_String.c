@@ -2,6 +2,9 @@
 //https://github.com/L-F-Z/ADT_Code
 //Developed by UCAS ADT_Code Group
 
+//AW: I highly recommend string in cpp. These functions work well with normal char string in C.
+//Some of the functions may have bugs.
+
 #ifndef CHAR_STRING
 #define CHAR_STRING
 
@@ -17,7 +20,7 @@ typedef int Status;
 #define OK 1
 #define ERROR 0
 #define INFEASIBLE -1
-#define OVERFLOW -2 
+#define OVERFLOW -2
 //-----------------------------
 
 //---------|Typedef|-----------
@@ -328,68 +331,68 @@ int Index_KMP(String_C S, String_C T, int pos)
 
     //for debug
 
-// #include "lazy.h"
-// int test_gyc()
-// {
-//     String_C a, b, c, d, e, f;
+    // #include "lazy.h"
+    // int test_gyc()
+    // {
+    //     String_C a, b, c, d, e, f;
 
-//     StrInput(&a);
-//     StrPrint(a);
+    //     StrInput(&a);
+    //     StrPrint(a);
 
-//     StrAssign(&b, "2333333");
-//     StrAssign(&c, "111111");
-//     StrAssign(&d, "222222222");
-//     StrAssign(&e, "33333");
-//     StrPrint(b);
-//     StrPrint(c);
-//     StrPrint(d);
-//     StrPrint(e);
-//     puts("-------------------");
-//     StrCopy(&a, c);
-//     puts("-------------------");
+    //     StrAssign(&b, "2333333");
+    //     StrAssign(&c, "111111");
+    //     StrAssign(&d, "222222222");
+    //     StrAssign(&e, "33333");
+    //     StrPrint(b);
+    //     StrPrint(c);
+    //     StrPrint(d);
+    //     StrPrint(e);
+    //     puts("-------------------");
+    //     StrCopy(&a, c);
+    //     puts("-------------------");
 
-//     StrPrint(c);
-//     puts("-------------------");
+    //     StrPrint(c);
+    //     puts("-------------------");
 
-//     StrPrint(a);
+    //     StrPrint(a);
 
-//     //printf("%d\n",StrEmpty(a));
-//     //ClearString(&a);
+    //     //printf("%d\n",StrEmpty(a));
+    //     //ClearString(&a);
 
-//     SubString(&e, b, 0, 3);
-//     StrPrint(e);
-// }
-// int main()
-// {
-//     /*
-//     String_C a;
-//     StrInput(&a);
-//     StrPrint(a);
-//     StrAssign(&a, "2333333");
-//     StrPrint(a);*/
+    //     SubString(&e, b, 0, 3);
+    //     StrPrint(e);
+    // }
+    // int main()
+    // {
+    //     /*
+    //     String_C a;
+    //     StrInput(&a);
+    //     StrPrint(a);
+    //     StrAssign(&a, "2333333");
+    //     StrPrint(a);*/
 
-//     test_gyc();
+    //     test_gyc();
 
-//     String_C a, b, d, e;
-//     // StrInput(&a);
-//     // StrInput(&b);
-//     // StrInput(&d);
-//     StrAssign(&a, "02330000000023333000000");
-//     StrAssign(&b, "233");
-//     StrAssign(&d, "4");
-//     StrAssign(&e, "3");
-//     String_C *c;
-//     c = &a;
-//     printf("%s\n", a);
-//     printf("%s\n", b);
-//     printf("%s\n", d);
-//     printf("%s\n", *c);
-//     StrDelete(c, 2, 3);
-//     printf("%s\n", *c);
-//     StrInsert(c, 2, b);
-//     printf("%s\n", *c);
-//     Replace(c, e, d);
-//     printf("%s\n", *c);
-// }
+    //     String_C a, b, d, e;
+    //     // StrInput(&a);
+    //     // StrInput(&b);
+    //     // StrInput(&d);
+    //     StrAssign(&a, "02330000000023333000000");
+    //     StrAssign(&b, "233");
+    //     StrAssign(&d, "4");
+    //     StrAssign(&e, "3");
+    //     String_C *c;
+    //     c = &a;
+    //     printf("%s\n", a);
+    //     printf("%s\n", b);
+    //     printf("%s\n", d);
+    //     printf("%s\n", *c);
+    //     StrDelete(c, 2, 3);
+    //     printf("%s\n", *c);
+    //     StrInsert(c, 2, b);
+    //     printf("%s\n", *c);
+    //     Replace(c, e, d);
+    //     printf("%s\n", *c);
+    // }
 
 #endif
