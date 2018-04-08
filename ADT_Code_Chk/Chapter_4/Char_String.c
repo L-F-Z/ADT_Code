@@ -2,6 +2,8 @@
 //https://github.com/L-F-Z/ADT_Code
 //Developed by UCAS ADT_Code Group
 
+//AW: I highly recommend string in cpp. These functions work well with normal char string in C.
+
 #ifndef CHAR_STRING
 #define CHAR_STRING
 
