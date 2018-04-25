@@ -53,6 +53,7 @@ class Glist
     int print(int level = 0);        //利用缩进区分表的层次
     int insert(T src, int position); //start from 0;
     int insert(Glist<T> &srclist, int position);
+    int erase(int position);
     T operator[](int p);
     //Do be aware that this insert and push implemention will add the origin structure to the father list.
     //If you need to protect the origin list, use copy function to make a copy of the origin list;
@@ -270,7 +271,7 @@ Glist<T> *Glist<T>::end()
     {
         now = now->nextelement_;
     }
-    return now
+    return now;
 }
 
 template <class T>
