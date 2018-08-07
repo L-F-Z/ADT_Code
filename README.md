@@ -73,4 +73,7 @@ QA附注: 反正期末了也没人写了作为强迫症我就把后面补上了,
 第二期开发人员
 --
 王浩宇 WangNorthSea
+
 薛泓彦 xuehongyanL
+
+雷慈 LinHeLurking
