@@ -70,6 +70,7 @@ TODO LIST
 
 第二期开发人员
 --
-王浩宇 WangNorthSea
-薛泓彦 xuehongyanL
-雷慈 LinHeLurking
+**管理层**
+- 王浩宇
+- 薛泓彦
+- 雷慈
